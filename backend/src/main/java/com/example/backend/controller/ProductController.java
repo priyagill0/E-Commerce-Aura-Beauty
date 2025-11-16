@@ -9,25 +9,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.Product;
-import com.example.backend.repository.ProductRepository;
+import com.example.backend.service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
 @CrossOrigin(origins = "*") // needed to connect frontend
 public class ProductController {
-    private final ProductRepository repo;
 
-    public ProductController(ProductRepository repo) {
-        this.repo = repo;
+    private final ProductService service;
+
+    public ProductController(ProductService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Product> getAll() {
-        return repo.findAll();
+        return service.getAllProducts();
     }
 
     @PostMapping
     public Product add(@RequestBody Product product) {
-        return repo.save(product);
+        return service.addProduct(product);
     }
 }
