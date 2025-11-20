@@ -3,6 +3,8 @@ package com.example.backend.model;
 import java.time.LocalDateTime;
 import static java.util.UUID.randomUUID;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,6 +35,8 @@ public class Product {
     @Column(name = "updated_at", updatable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    private List<Category> categories;
+
     public Product() {}  
 
     public Product(String name, String description, ProductType product_type, String brand, LocalDateTime created_at, LocalDateTime updated_at) {
@@ -48,43 +52,64 @@ public class Product {
     public String getProductId() {
         return productId;
     }
+
     public void setProductId(String productId) {
         this.productId = productId;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public ProductType getProductType() {
         return productType;
     }
+
     public void setProductType(ProductType productType) {
         this.productType = productType;
     }
+
     public String getBrand() {
         return brand;
     }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt; 
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }
