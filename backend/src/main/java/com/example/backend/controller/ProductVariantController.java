@@ -16,7 +16,6 @@ import com.example.backend.service.ProductVariantService;
 
 @RestController
 @RequestMapping("/api/product_variant")
-@CrossOrigin(origins = "*") // needed to connect frontend
 public class ProductVariantController {
     
     private final ProductVariantService service;

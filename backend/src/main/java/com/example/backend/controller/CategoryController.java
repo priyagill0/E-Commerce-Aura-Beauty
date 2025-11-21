@@ -13,7 +13,6 @@ import com.example.backend.service.CategoryService;
 
 @RestController
 @RequestMapping("/api/category")
-@CrossOrigin(origins = "*") // needed to connect frontend
 public class CategoryController {
 
     private final CategoryService service;

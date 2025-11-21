@@ -18,7 +18,6 @@ import com.example.backend.service.OrderItemService;
 
 @RestController
 @RequestMapping("/api/oder_item")
-@CrossOrigin(origins = "*") // needed to connect frontend
 public class OrderItemController {
     
     private final OrderItemService service;

@@ -15,7 +15,6 @@ import com.example.backend.service.CartService;
 
 @RestController
 @RequestMapping("/api/cart_item")
-@CrossOrigin(origins = "*")
 public class CartItemController {
 
     private final CartItemService itemService;

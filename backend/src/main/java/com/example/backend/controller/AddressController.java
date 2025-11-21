@@ -17,7 +17,6 @@ import com.example.backend.service.AddressService;
 
 @RestController
 @RequestMapping("/api/address")
-@CrossOrigin(origins = "*") // needed to connect frontend
 public class AddressController {
     
     private final AddressService service;

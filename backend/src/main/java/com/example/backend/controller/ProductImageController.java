@@ -12,7 +12,6 @@ import com.example.backend.service.ProductImageService;
 
 @RestController
 @RequestMapping("/api/product_image")
-@CrossOrigin(origins = "*")
 public class ProductImageController {
     private final ProductImageService service;
 
