@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -27,6 +27,7 @@ public class Order {
 
     private double subtotal;  
     private double tax;  
+    private double shipping;
     private double total;  
 
 
@@ -44,18 +45,24 @@ public class Order {
     @JoinColumn(name = "billing_address_id", nullable = false)
     private Address billingAddress;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Customer customer; // to link order to user
+
     public Order() {}  
 
-    public Order(String orderId , Status status, double subtotal,double tax, double total, LocalDateTime placedAt, LocalDateTime updatedAt, Address shippingAddress, Address billingAddress) {
+    public Order(String orderId , Status status, double subtotal, double tax, double shipping, double total, LocalDateTime placedAt, LocalDateTime updatedAt, Address shippingAddress, Address billingAddress, Customer customer) {
         this.orderId = orderId;
         this.status = status;
         this.subtotal = subtotal;
         this.tax=tax;
+        this.shipping=shipping;
         this.total=total;
         this.placedAt=placedAt;
         this.updatedAt=updatedAt;
         this.shippingAddress=shippingAddress; 
         this.billingAddress=billingAddress;
+        this.customer=customer;
     }
     
     // Getters and Setters
@@ -83,6 +90,12 @@ public class Order {
     }
     public void setTax(double tax) {
         this.tax = tax;
+    }
+    public double getShipping() {
+        return shipping;
+    }
+    public void setShipping(double shipping) {
+        this.shipping = shipping;
     }
     public double getTotal() {
         return total;
@@ -115,5 +128,10 @@ public class Order {
     public void setBillingAddress(Address billingAddress) {
         this.billingAddress = billingAddress;
     }
-   
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

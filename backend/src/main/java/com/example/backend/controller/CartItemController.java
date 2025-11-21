@@ -1,7 +1,5 @@
 package com.example.backend.controller;
 
-import java.util.UUID;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +27,7 @@ public class CartItemController {
     }
 
     @PostMapping("/{cartId}")
-    public CartItem addItem(@PathVariable UUID cartId, @RequestBody CartItem item) {
+    public CartItem addItem(@PathVariable String cartId, @RequestBody CartItem item) {
         Cart cart = cartService.getCart(cartId);
         item.setCart(cart);
         return itemService.save(item);

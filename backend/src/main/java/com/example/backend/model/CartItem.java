@@ -1,6 +1,10 @@
 package com.example.backend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class CartItem {
@@ -14,10 +18,18 @@ public class CartItem {
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "variant_id")
+    private ProductVariant productVariant;
 
     private int quantity;
+
+    public CartItem() {}
+    
+    public CartItem(Cart cart, ProductVariant productVariant, int quantity) {
+        this.cart = cart;
+        this.productVariant = productVariant;
+        this.quantity = quantity;
+    }
 
     // getters and setters
     public Long getId() { return id; }
@@ -26,8 +38,8 @@ public class CartItem {
     public Cart getCart() { return cart; }
     public void setCart(Cart cart) { this.cart = cart; }
 
-    public Product getProduct() { return product; }
-    public void setProduct(Product product) { this.product = product; }
+    public ProductVariant getProductVariant() { return productVariant; }
+    public void setProductVariant(ProductVariant productVariant) { this.productVariant = productVariant; }
 
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
