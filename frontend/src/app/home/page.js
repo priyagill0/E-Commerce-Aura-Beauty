@@ -1,11 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [productVariants, setProductVariants] = useState([]);
   const [productImages, setProductImages] = useState([]);
+  const router = useRouter();
+  
+  const goToCart = () => {
+    router.push("/cart"); // navigate to cart page
+  };
+
+//http://localhost:8080/api/cart/add?variantId=c2d3e4f5-a678-90b1-c2d3-e4f5a67890b1&quantity=2
+const addToCart = async (variantId, quantity = 1) => {
+  try {
+    const res = await fetch(
+      `http://localhost:8080/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
+      { method: "POST", credentials: "include", } //the browser sends the JSESSIONID cookie to backend to save the sessionId.
+    );
+
+    if (!res.ok) throw new Error("Failed to add to cart");
+
+    console.log("Added to cart!");
+  } catch (error) {
+    console.error("Error adding item:", error);
+  }
+};
 
 
   useEffect(() => {
@@ -43,6 +65,22 @@ export default function HomePage() {
       <h1>Welcome to My E-Commerce Store!</h1>
       <h2>Here are the products we have:</h2>
 
+      <div>
+      <img
+        src="/assets/cart.jpg"
+        alt="Go to Cart"
+        onClick={goToCart}
+        style={{
+          position: "absolute",
+          top: "1rem",
+          right: "1rem",
+          width: "50px",   // smaller size for corner
+          height: "50px",
+          cursor: "pointer",
+        }}
+      />
+      </div>
+
         {products.map((product) => {
           // filter variants for this product
           const variantsForProduct = productVariants.filter(
@@ -52,6 +90,22 @@ export default function HomePage() {
           return (
             <div key={product.productId} className="mb-8 p-4 border rounded-lg">
               <h3 className="text-xl font-bold">{product.name}</h3>
+
+              <div>
+              <img
+                src="/assets/add-to-cart.jpg"
+                alt="Add to Cart"
+                onClick={() => addToCart(variantsForProduct[0]?.variantId, 1)}
+                style={{
+                  top: "1rem",
+                  right: "1rem",
+                  width: "50px",
+                  height: "50px",
+                  cursor: "pointer"
+                }}
+              />
+              </div>
+
               <p>{product.description}</p>
               <p className="text-gray-600">Brand: {product.brand}</p>
               <p className="text-gray-600">Type: {product.productType}</p>
