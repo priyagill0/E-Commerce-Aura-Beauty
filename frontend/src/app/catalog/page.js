@@ -145,7 +145,7 @@ export default function CatalogPage() {
                     const productVariants = variants.filter(
                         (v) => v.product.productId === p.productId
                     );
-                    const price = productVariants[0]?.price ?? "N/A";
+                    // const price = productVariants[0]?.price ?? "N/A";
 
                     return (
                         <Link
@@ -160,7 +160,8 @@ export default function CatalogPage() {
                             />
 
                             <h2 className="mt-3 font-medium">{p.name}</h2>
-                            <p className="text-gray-500">${price}</p>
+                            {/* <p className="text-gray-500">${price}</p> */}
+                            <p className="text-gray-500">{p.brand}</p>
                         </Link>
                     );
                 })}

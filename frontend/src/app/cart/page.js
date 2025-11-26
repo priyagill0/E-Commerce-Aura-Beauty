@@ -7,13 +7,14 @@ import OrderSummary from "./OrderSummary";
 import EmptyCart from "./EmptyCart";
 import CartItem from "./CartItem";
 import Typography from "@mui/material/Typography";
+import { useCart } from "@/app/components/CartContext";
 
 export default function Cart() {
 
 const [cart, setCart] = useState(null);
-
 const [productImages, setProductImages] = useState([]);
 const router = useRouter(); 
+const { fetchCart } = useCart();
 
 const deleteCartItem = async (itemId) => {
   try {
@@ -28,6 +29,7 @@ const deleteCartItem = async (itemId) => {
     const data = text ? JSON.parse(text) : { items: [] };
     console.log("Updated Cart Object after deletion:", data);
     setCart(data);
+    fetchCart();
   }
   catch (err) {
     console.error("Error deleting item from cart:", err);
@@ -50,6 +52,7 @@ const updateQuantity = async (itemId, newQuantity) => {
 
     console.log("Updated Cart Object:", data);
     setCart(data);
+    fetchCart();
   } catch (err) {
     console.error("Error updating cart:", err);
   }
@@ -68,6 +71,7 @@ useEffect(() => {
     .then((data) => { 
       console.log("Cart Object:", data);
       setCart(data);
+      fetchCart();
     })
     .catch((err) => console.error("Error fetching cart:", err));
 }, []);

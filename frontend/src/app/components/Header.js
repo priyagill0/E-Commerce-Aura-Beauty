@@ -31,8 +31,30 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import IconButton from '@mui/material/IconButton';
+import Badge, { badgeClasses } from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { styled } from '@mui/material/styles'; 
+import { useCart } from "./CartContext"
 
 export default function Header() {
+    // const [cart, setCart] = useState(null);
+    const { cart } = useCart();
+    const router = useRouter(); 
+
+  const goToCart = () => {
+    router.push("/cart"); // navigate to cart page
+  };
+
+  // Styled Badge for Cart Icon
+  const CartBadge = styled(Badge)`
+  & .${badgeClasses.badge} {
+    top: -4px;
+    right: -3px;
+  }
+  `; 
+  
     return (
         <header
             style={{
@@ -57,7 +79,12 @@ export default function Header() {
                     <Link href="/best-sellers">Best Sellers</Link>
                 </nav>
 
-                <Link href="/cart">🛒</Link>
+                {/* <Link href="/cart">🛒</Link> */}
+                <IconButton onClick={goToCart}>
+                <CartBadge badgeContent={cart?.totalCartItems || 0} color="primary" overlap="circular">
+                    <ShoppingCartIcon fontSize="large" />
+                </CartBadge>
+                </IconButton>
             </div>
         </header>
     );
