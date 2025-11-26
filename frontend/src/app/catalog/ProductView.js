@@ -1,1 +1,0 @@
-// the view you see when a product on the catalog is clicked.
