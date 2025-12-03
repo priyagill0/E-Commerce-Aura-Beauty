@@ -2,6 +2,7 @@ package com.example.backend.model;
 
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,7 +23,7 @@ public class Customer {
     private String email; 
     private String password;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) // address is always saved/updated along with customer.
     @JoinColumn(name = "address_id", nullable = false) // foreign key, many to one
     private Address address;
 
