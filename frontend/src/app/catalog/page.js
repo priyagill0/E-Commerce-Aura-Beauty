@@ -1,67 +1,4 @@
 
-// "use client";
-
-// import { imageMap } from "@/lib/imageMap";
-// import Link from "next/link";
-// import FilterBar from "@/app/components/FilterBar";
-
-
-// async function getProducts() {
-//     const res = await fetch("http://localhost:8080/api/product", { cache: "no-store" });
-//     if (!res.ok) throw new Error("Failed to fetch products");
-//     return res.json();
-// }
-
-// async function getVariants() {
-//     const res = await fetch("http://localhost:8080/api/product_variant", { cache: "no-store" });
-//     if (!res.ok) throw new Error("Failed to fetch variants");
-//     return res.json();
-// }
-
-// export default async function CatalogPage() {
-//     const [products, variants] = await Promise.all([
-//         getProducts(),
-//         getVariants(),
-//     ]);
-
-//     return (
-//         <div className="max-w-6xl mx-auto px-6 py-10">
-//             <h1 className="text-3xl font-light mb-6">All Products</h1>
-//             <FilterBar onChange={(filters) => console.log(filters)} />
-
-//             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-//                 {products
-//                     .filter((p) => imageMap[p.productId])   // 🧼 remove any broken/corrupted product IDs
-//                     .map((p) => {
-//                         console.log("VALID product loaded:", p.productId);
-
-//                         const productVariants = variants.filter(
-//                             (v) => v.product.productId === p.productId
-//                         );
-
-//                         const price = productVariants[0]?.price ?? "N/A";
-
-//                         return (
-//                             <Link
-//                                 key={p.productId}
-//                                 href={`/catalog/${p.productId}`}
-//                                 className="border p-4 rounded shadow-sm hover:shadow-md transition block"
-//                             >
-//                                 <img
-//                                     src={`/assets/products/${p.productId}/${imageMap[p.productId]}`}
-//                                     alt={p.name}
-//                                     className="w-full h-48 object-cover"
-//                                 />
-
-//                                 <h2 className="mt-3 font-medium">{p.name}</h2>
-//                                 <p className="text-gray-500">${price}</p>
-//                             </Link>
-//                         );
-//                     })}
-//             </div>
-//         </div>
-//     );
-// }
 "use client";
 
 import { useEffect, useState } from "react";
@@ -76,6 +13,7 @@ export default function CatalogPage() {
         type: "",
         price: "",
         sort: "",
+        categories: [],   
     });
 
     // Fetch products + variants once
@@ -111,7 +49,30 @@ export default function CatalogPage() {
             const [min, max] = filters.price.split("-").map(Number);
             return price >= min && price <= max;
         })
+        .filter((p) => {
+            // category filter
+            const selected = filters.categories;
+            if (!selected || selected.length === 0) return true;
+        
+            const productCategoryIds = p.categories?.map(c => c.categoryId) || [];
+        
+            // Product matches if ANY category ID overlaps
+            return productCategoryIds.some((id) => selected.includes(id));
+        })
+        .filter((p) => {
+            // Search filter
+            if (!filters.search) return true;
+        
+            const query = filters.search.toLowerCase();
+        
+            // Check if search matches to product names or brands
+            return (
+                p.name.toLowerCase().includes(query) ||
+                p.brand?.toLowerCase().includes(query)  
+            );
+        })
         .sort((a, b) => {
+            // Sorting
             if (!filters.sort) return 0;
 
             const aVariants = variants.filter(v => v.product.productId === a.productId);
@@ -120,12 +81,15 @@ export default function CatalogPage() {
             const aPrice = aVariants[0]?.price ?? 0;
             const bPrice = bVariants[0]?.price ?? 0;
 
+            // Sort by Name A-Z
             if (filters.sort === "az") {
                 return a.name.localeCompare(b.name);
             }
+            // Sort by Price Low to High
             if (filters.sort === "low") {
                 return aPrice - bPrice;
             }
+            // Sort by Price High to Low
             if (filters.sort === "high") {
                 return bPrice - aPrice;
             }
