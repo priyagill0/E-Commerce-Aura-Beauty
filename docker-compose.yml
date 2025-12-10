@@ -16,7 +16,9 @@ services:
     build: ./backend
     container_name: spring-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce?useSSL=false&serverTimezone=America/Toronto
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Toronto
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: EECS4413
     ports:
       - "8080:8080"
     depends_on:
