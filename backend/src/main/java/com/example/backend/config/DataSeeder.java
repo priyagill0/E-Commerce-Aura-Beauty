@@ -25,6 +25,8 @@ import com.example.backend.repository.ProductVariantRepository;
 import com.example.backend.service.AuthService;
 import static java.util.UUID.randomUUID;
 
+import java.time.LocalDateTime;
+
 @Component
 public class DataSeeder implements CommandLineRunner {
 
@@ -833,6 +835,8 @@ public class DataSeeder implements CommandLineRunner {
 
         // create order
         Order janeOrder = new Order();
+        janeOrder.setPlacedAt(LocalDateTime.parse("2025-11-03T14:25:12"));
+        janeOrder.setUpdatedAt(LocalDateTime.parse("2025-11-08T14:25:12"));
         janeOrder.setStatus(Status.Packed);
         janeOrder.setSubtotal(subtotal);
         janeOrder.setTax(tax);
@@ -875,6 +879,8 @@ public class DataSeeder implements CommandLineRunner {
         double jTotal = jSubtotal + jTax + jShipping;
 
         Order jenniferOrder = new Order();
+        jenniferOrder.setPlacedAt(LocalDateTime.parse("2025-12-11T09:42:57"));
+        jenniferOrder.setUpdatedAt(LocalDateTime.parse("2025-12-13T09:42:57"));
         jenniferOrder.setStatus(Status.Delivered);
         jenniferOrder.setSubtotal(jSubtotal);
         jenniferOrder.setTax(jTax);
@@ -903,6 +909,8 @@ public class DataSeeder implements CommandLineRunner {
         double kTotal = kSubtotal + kTax;
 
         Order kimOrder = new Order();
+        kimOrder.setPlacedAt(LocalDateTime.parse("2025-11-17T18:03:44"));
+        kimOrder.setUpdatedAt(LocalDateTime.parse("2025-11-19T18:03:44"));
         kimOrder.setStatus(Status.Shipped);
         kimOrder.setSubtotal(kSubtotal);
         kimOrder.setTax(kTax);
@@ -929,6 +937,8 @@ public class DataSeeder implements CommandLineRunner {
         double bTotal = bSubtotal + bTax + bShipping;
 
         Order bellaOrder = new Order();
+        bellaOrder.setPlacedAt(LocalDateTime.parse("2025-12-02T13:15:21"));
+        bellaOrder.setUpdatedAt(LocalDateTime.parse("2025-12-03T13:15:21"));
         bellaOrder.setStatus(Status.Packed);
         bellaOrder.setSubtotal(bSubtotal);
         bellaOrder.setTax(bTax);
@@ -957,6 +967,8 @@ public class DataSeeder implements CommandLineRunner {
         double hTotal = hSubtotal + hTax;
 
         Order haileyOrder = new Order();
+        haileyOrder.setPlacedAt(LocalDateTime.parse("2025-11-28T21:50:05"));
+        haileyOrder.setUpdatedAt(LocalDateTime.parse("2025-11-28T21:50:05"));
         haileyOrder.setStatus(Status.Processing);
         haileyOrder.setSubtotal(hSubtotal);
         haileyOrder.setTax(hTax);
@@ -982,6 +994,8 @@ public class DataSeeder implements CommandLineRunner {
         double jdTotal = jdSubtotal + jdTax + jdShipping;
 
         Order janeOrder2 = new Order();
+        janeOrder2.setPlacedAt(LocalDateTime.parse("2025-12-05T10:36:33"));
+        janeOrder2.setUpdatedAt(LocalDateTime.parse("2025-12-07T10:36:33"));
         janeOrder2.setStatus(Status.Delivered);
         janeOrder2.setSubtotal(jdSubtotal);
         janeOrder2.setTax(jdTax);
@@ -1011,6 +1025,8 @@ public class DataSeeder implements CommandLineRunner {
         double o7Total = o7Subtotal + o7Tax + o7Shipping;
 
         Order order7 = new Order();
+        order7.setPlacedAt(LocalDateTime.parse("2025-11-20T16:12:48"));
+        order7.setUpdatedAt(LocalDateTime.parse("2025-11-28T16:12:48"));
         order7.setStatus(Status.Delivered);
         order7.setSubtotal(o7Subtotal);
         order7.setTax(o7Tax);
@@ -1039,6 +1055,8 @@ public class DataSeeder implements CommandLineRunner {
         double o8Total = o8Subtotal + o8Tax;
 
         Order order8 = new Order();
+        order8.setPlacedAt(LocalDateTime.parse("2025-12-08T11:08:19"));
+        order8.setUpdatedAt(LocalDateTime.parse("2025-12-17T11:08:19"));
         order8.setStatus(Status.Shipped);
         order8.setSubtotal(o8Subtotal);
         order8.setTax(o8Tax);
@@ -1065,6 +1083,8 @@ public class DataSeeder implements CommandLineRunner {
         double o9Total = o9Subtotal + o9Tax + o9Shipping;
 
         Order order9 = new Order();
+        order9.setPlacedAt(LocalDateTime.parse("2025-11-25T08:45:30"));
+        order9.setUpdatedAt(LocalDateTime.parse("2025-11-29T08:45:30"));
         order9.setStatus(Status.Packed);
         order9.setSubtotal(o9Subtotal);
         order9.setTax(o9Tax);
@@ -1094,6 +1114,8 @@ public class DataSeeder implements CommandLineRunner {
         double o10Total = o10Subtotal + o10Tax;
 
         Order order10 = new Order();
+        order10.setPlacedAt(LocalDateTime.parse("2025-12-15T19:22:07"));
+        order10.setUpdatedAt(LocalDateTime.parse("2025-12-18T19:22:07"));
         order10.setStatus(Status.Delivered);
         order10.setSubtotal(o10Subtotal);
         order10.setTax(o10Tax);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.OrderItem;
 
 import com.example.backend.service.OrderItemService;
+import com.example.backend.service.SalesHistoryDTO;
 
 
 
@@ -32,13 +33,19 @@ public class OrderItemController {
 
     // Get variants for a specific product
     @GetMapping("/{orderItemId}")
-    public List<OrderItem> getByOrderItemId(@PathVariable String productId) {
-        return service.getOrderItemByOrderItemId(productId);
+    public List<OrderItem> getByOrderItemId(@PathVariable String orderItemId) {
+        return service.getOrderItemByOrderItemId(orderItemId);
     }
 
     @GetMapping("/order/{orderId}")
     public List<OrderItem> getByOrderId(@PathVariable String orderId) {
         return service.getOrderItemByOrderId(orderId);
+    }
+
+    @GetMapping("/sales-history")
+    public List<SalesHistoryDTO> getSalesHistory() {
+        // Just delegate to the service
+        return service.getSalesHistory();
     }
 
     @PostMapping
