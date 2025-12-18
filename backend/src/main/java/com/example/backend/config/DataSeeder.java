@@ -7,17 +7,23 @@ import org.springframework.stereotype.Component;
 import com.example.backend.model.Address;
 import com.example.backend.model.Category;
 import com.example.backend.model.Customer;
+import com.example.backend.model.Order;
+import com.example.backend.model.OrderItem;
 import com.example.backend.model.Payment;
 import com.example.backend.model.Product;
 import com.example.backend.model.ProductImage;
 import com.example.backend.model.ProductType;
 import com.example.backend.model.ProductVariant;
+import com.example.backend.model.Status;
 import com.example.backend.repository.CategoryRepository;
 import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.OrderItemRepository;
+import com.example.backend.repository.OrderRepository;
 import com.example.backend.repository.ProductImageRepository;
 import com.example.backend.repository.ProductRepository;
 import com.example.backend.repository.ProductVariantRepository;
 import com.example.backend.service.AuthService;
+import static java.util.UUID.randomUUID;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
@@ -39,6 +45,11 @@ public class DataSeeder implements CommandLineRunner {
     private CustomerRepository customerRepository;
     @Autowired
     private AuthService authService;
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -804,6 +815,306 @@ public class DataSeeder implements CommandLineRunner {
 
 
 
+        // ============================================================
+        // ORDER 1: Jane Doe
+        // ============================================================
+
+        // prices
+        double item1Price = exfoliatingTonerVariant2.getPrice(); // 12.99
+        double item2Price = foamingFaceWashVariant1.getPrice();  // 10.99
+
+        int qty1 = 1;
+        int qty2 = 2;
+
+        double subtotal = (item1Price * qty1) + (item2Price * qty2);
+        double tax = subtotal * 0.13;
+        double shipping = 8.00;
+        double total = subtotal + tax + shipping;
+
+        // create order
+        Order janeOrder = new Order();
+        janeOrder.setStatus(Status.Packed);
+        janeOrder.setSubtotal(subtotal);
+        janeOrder.setTax(tax);
+        janeOrder.setShipping(shipping);
+        janeOrder.setTotal(total);
+        janeOrder.setCustomer(janeDoe);
+        janeOrder.setShippingAddress(janeDoeAddress);
+        janeOrder.setBillingAddress(janeDoeAddress);
+        janeOrder.setPayment(janPay);
+
+        orderRepository.save(janeOrder);
+
+        // order items
+        OrderItem item1 = new OrderItem(
+            randomUUID().toString(),
+            janeOrder,
+            exfoliatingTonerVariant2,
+            qty1,
+            item1Price
+        );
+
+        OrderItem item2 = new OrderItem(
+            randomUUID().toString(),
+            janeOrder,
+            foamingFaceWashVariant1,
+            qty2,
+            item2Price
+        );
+
+        orderItemRepository.save(item1);
+        orderItemRepository.save(item2);
+
+
+        double jItem1Price = watermelonGlowMaskVariant.getPrice(); // 11.00
+        double jItem2Price = niacinamideSerumV1.getPrice();        // 8.90
+
+        double jSubtotal = (jItem1Price * 2) + jItem2Price;
+        double jTax = jSubtotal * 0.13;
+        double jShipping = 8.00;
+        double jTotal = jSubtotal + jTax + jShipping;
+
+        Order jenniferOrder = new Order();
+        jenniferOrder.setStatus(Status.Delivered);
+        jenniferOrder.setSubtotal(jSubtotal);
+        jenniferOrder.setTax(jTax);
+        jenniferOrder.setShipping(jShipping);
+        jenniferOrder.setTotal(jTotal);
+        jenniferOrder.setCustomer(jennifer);
+        jenniferOrder.setShippingAddress(jenniferAddress);
+        jenniferOrder.setBillingAddress(jenniferAddress);
+        jenniferOrder.setPayment(jenPay);
+
+        orderRepository.save(jenniferOrder);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), jenniferOrder, watermelonGlowMaskVariant, 2, jItem1Price
+        ));
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), jenniferOrder, niacinamideSerumV1, 1, jItem2Price
+        ));
+
+        double kItem1Price = vitaminCSerumV1.getPrice(); // 45.00
+
+        double kSubtotal = kItem1Price;
+        double kTax = kSubtotal * 0.13;
+        double kShipping = 8.00;
+        double kTotal = kSubtotal + kTax;
+
+        Order kimOrder = new Order();
+        kimOrder.setStatus(Status.Shipped);
+        kimOrder.setSubtotal(kSubtotal);
+        kimOrder.setTax(kTax);
+        kimOrder.setShipping(kShipping);
+        kimOrder.setTotal(kTotal);
+        kimOrder.setCustomer(kimk);
+        kimOrder.setShippingAddress(kimAddress);
+        kimOrder.setBillingAddress(kimAddress);
+        kimOrder.setPayment(kimPay);
+
+        orderRepository.save(kimOrder);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), kimOrder, vitaminCSerumV1, 1, kItem1Price
+        ));
+
+
+        double bItem1Price = guaShaVariant.getPrice();     // 22.00
+        double bItem2Price = lipMaskV1.getPrice();         // 24.00
+
+        double bSubtotal = bItem1Price + bItem2Price;
+        double bTax = bSubtotal * 0.13;
+        double bShipping = 8.00;
+        double bTotal = bSubtotal + bTax + bShipping;
+
+        Order bellaOrder = new Order();
+        bellaOrder.setStatus(Status.Packed);
+        bellaOrder.setSubtotal(bSubtotal);
+        bellaOrder.setTax(bTax);
+        bellaOrder.setShipping(bShipping);
+        bellaOrder.setTotal(bTotal);
+        bellaOrder.setCustomer(bellaHadid);
+        bellaOrder.setShippingAddress(bellaAddress);
+        bellaOrder.setBillingAddress(bellaAddress);
+        bellaOrder.setPayment(belPay);
+
+        orderRepository.save(bellaOrder);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), bellaOrder, guaShaVariant, 1, bItem1Price
+        ));
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), bellaOrder, lipMaskV1, 1, bItem2Price
+        ));
+
+        double hItem1Price = peptideCreamV1.getPrice(); // 68.00
+
+        double hSubtotal = hItem1Price;
+        double hTax = hSubtotal * 0.13;
+        double hShipping = 8.00;
+        double hTotal = hSubtotal + hTax;
+
+        Order haileyOrder = new Order();
+        haileyOrder.setStatus(Status.Processing);
+        haileyOrder.setSubtotal(hSubtotal);
+        haileyOrder.setTax(hTax);
+        haileyOrder.setShipping(hShipping);
+        haileyOrder.setTotal(hTotal);
+        haileyOrder.setCustomer(HaileyBieb);
+        haileyOrder.setShippingAddress(haileyAddress);
+        haileyOrder.setBillingAddress(haileyAddress);
+        haileyOrder.setPayment(hailPay);
+
+        orderRepository.save(haileyOrder);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), haileyOrder, peptideCreamV1, 1, hItem1Price
+        ));
+
+        double jdItem1Price = bhaExfoliantV1.getPrice();   // 34.00
+        double jdItem2Price = sunscreen50V1.getPrice();   // 38.00
+
+        double jdSubtotal = jdItem1Price + jdItem2Price;
+        double jdTax = jdSubtotal * 0.13;
+        double jdShipping = 8.00;
+        double jdTotal = jdSubtotal + jdTax + jdShipping;
+
+        Order janeOrder2 = new Order();
+        janeOrder2.setStatus(Status.Delivered);
+        janeOrder2.setSubtotal(jdSubtotal);
+        janeOrder2.setTax(jdTax);
+        janeOrder2.setShipping(jdShipping);
+        janeOrder2.setTotal(jdTotal);
+        janeOrder2.setCustomer(janeDoe);
+        janeOrder2.setShippingAddress(janeDoeAddress);
+        janeOrder2.setBillingAddress(janeDoeAddress);
+        janeOrder2.setPayment(janPay);
+
+        orderRepository.save(janeOrder2);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), janeOrder2, bhaExfoliantV1, 1, jdItem1Price
+        ));
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), janeOrder2, sunscreen50V1, 1, jdItem2Price
+        ));
+
+        double o7Item1 = retinolSerumV1.getPrice(); // 55.00
+        double o7Item2 = peptideCreamV1.getPrice(); // 68.00
+
+        double o7Subtotal = o7Item1 + o7Item2;
+        double o7Tax = o7Subtotal * 0.13;
+        double o7Shipping = 0.00;
+        double o7Total = o7Subtotal + o7Tax + o7Shipping;
+
+        Order order7 = new Order();
+        order7.setStatus(Status.Delivered);
+        order7.setSubtotal(o7Subtotal);
+        order7.setTax(o7Tax);
+        order7.setShipping(o7Shipping);
+        order7.setTotal(o7Total);
+        order7.setCustomer(jennifer);
+        order7.setShippingAddress(jenniferAddress);
+        order7.setBillingAddress(jenniferAddress);
+        order7.setPayment(jenPay);
+
+        orderRepository.save(order7);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order7, retinolSerumV1, 1, o7Item1
+        ));
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order7, peptideCreamV1, 1, o7Item2
+        ));
+
+
+        double o8Item1 = clayMaskV1.getPrice(); // 139.00
+
+        double o8Subtotal = o8Item1;
+        double o8Tax = o8Subtotal * 0.13;
+        double o8Shipping = 0.00;
+        double o8Total = o8Subtotal + o8Tax;
+
+        Order order8 = new Order();
+        order8.setStatus(Status.Shipped);
+        order8.setSubtotal(o8Subtotal);
+        order8.setTax(o8Tax);
+        order8.setShipping(o8Shipping);
+        order8.setTotal(o8Total);
+        order8.setCustomer(kimk);
+        order8.setShippingAddress(kimAddress);
+        order8.setBillingAddress(kimAddress);
+        order8.setPayment(kimPay);
+
+        orderRepository.save(order8);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order8, clayMaskV1, 1, o8Item1
+        ));
+
+
+        double o9Item1 = vitaminCSerumV1.getPrice(); // 45.00
+        double o9Item2 = guaShaVariant.getPrice();   // 22.00
+
+        double o9Subtotal = (o9Item1 * 2) + o9Item2; // 112.00
+        double o9Tax = o9Subtotal * 0.13;
+        double o9Shipping = 0.00;
+        double o9Total = o9Subtotal + o9Tax + o9Shipping;
+
+        Order order9 = new Order();
+        order9.setStatus(Status.Packed);
+        order9.setSubtotal(o9Subtotal);
+        order9.setTax(o9Tax);
+        order9.setShipping(o9Shipping);
+        order9.setTotal(o9Total);
+        order9.setCustomer(bellaHadid);
+        order9.setShippingAddress(bellaAddress);
+        order9.setBillingAddress(bellaAddress);
+        order9.setPayment(belPay);
+
+        orderRepository.save(order9);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order9, vitaminCSerumV1, 2, o9Item1
+        ));
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order9, guaShaVariant, 1, o9Item2
+        ));
+
+        double o10Item1 = ultraRepairCreamV1.getPrice(); // 58.00
+        double o10Item2 = watermelonTonerV1.getPrice(); // 29.00
+        double o10Item3 = sunscreen50V1.getPrice();     // 38.00
+
+        double o10Subtotal = o10Item1 + o10Item2 + o10Item3; // 125.00
+        double o10Tax = o10Subtotal * 0.13;
+        double o10Shipping = 0.0;
+        double o10Total = o10Subtotal + o10Tax;
+
+        Order order10 = new Order();
+        order10.setStatus(Status.Delivered);
+        order10.setSubtotal(o10Subtotal);
+        order10.setTax(o10Tax);
+        order10.setShipping(o10Shipping);
+        order10.setTotal(o10Total);
+        order10.setCustomer(HaileyBieb);
+        order10.setShippingAddress(haileyAddress);
+        order10.setBillingAddress(haileyAddress);
+        order10.setPayment(hailPay);
+
+        orderRepository.save(order10);
+
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order10, ultraRepairCreamV1, 1, o10Item1
+        ));
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order10, watermelonTonerV1, 1, o10Item2
+        ));
+        orderItemRepository.save(new OrderItem(
+            randomUUID().toString(), order10, sunscreen50V1, 1, o10Item3
+        ));
 
     }
 }
