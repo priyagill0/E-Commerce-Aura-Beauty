@@ -8,3 +8,7 @@ logs
 *.log
 frontend/node_modules
 backend/node_modules
+.git
+Dockerfile
+docker-compose.yml
+README.md

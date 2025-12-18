@@ -55,7 +55,7 @@ export default function CheckoutPage() {
 
    // Load cart
    useEffect(() => {
-    fetch("http://localhost:8080/api/cart", { credentials: "include" })
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, { credentials: "include" })
       .then(async (res) => {
         const text = await res.text();
         if (!text) return { items: [] };
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
 
   // Load product images
   useEffect(() => {
-    fetch("http://localhost:8080/api/product_image")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`)
       .then((res) => res.json())
       .then((data) => setProductImages(data))
       .catch((err) => console.error("Error loading images:", err));
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     async function fetchAddress() {
       try {
-        const res = await fetch("http://localhost:8080/api/checkout/address", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkout/address`, {
           credentials: "include", // include session cookie
         });
   
@@ -153,7 +153,7 @@ export default function CheckoutPage() {
     };
     try {
       const res = await fetch(
-        "http://localhost:8080/api/checkout/checkoutconfirm",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/checkout/checkoutconfirm`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

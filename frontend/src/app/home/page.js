@@ -20,18 +20,18 @@ export default function HomePage() {
     router.push("/cart"); // navigate to cart page
   };
 
-//http://localhost:8080/api/cart/add?variantId=c2d3e4f5-a678-90b1-c2d3-e4f5a67890b1&quantity=2
-const addToCart = async (variantId, quantity = 1) => {
+ 
+  const addToCart = async (variantId, quantity = 1) => {
   try {
     const res = await fetch(
-      `http://localhost:8080/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
       { method: "POST", credentials: "include", } //the browser sends the JSESSIONID cookie to backend to save the sessionId.
     );
 
     if (!res.ok) throw new Error("Failed to add to cart");
 
     //Fetch the updated cart from backend, this will update the cart item badge count
-    const cartRes = await fetch("http://localhost:8080/api/cart", { credentials: "include" });
+    const cartRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, { credentials: "include" });
     const updatedCart = await cartRes.json();
     setCart(updatedCart);
   
@@ -43,7 +43,7 @@ const addToCart = async (variantId, quantity = 1) => {
 
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/product")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Products:", data);
@@ -53,7 +53,7 @@ const addToCart = async (variantId, quantity = 1) => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/product_variant")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Product Variants:", data);
@@ -63,7 +63,7 @@ const addToCart = async (variantId, quantity = 1) => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/product_image")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`)
     .then((res) => res.json())
       .then((data) => {-
         console.log("Product Image:", data);
@@ -73,7 +73,7 @@ const addToCart = async (variantId, quantity = 1) => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/cart", {credentials: "include"})
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, {credentials: "include"})
     .then((res) => res.json())
       .then((data) => {-
         console.log("Cart:", data);

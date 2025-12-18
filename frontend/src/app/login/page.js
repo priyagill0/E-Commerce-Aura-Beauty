@@ -23,7 +23,7 @@ export default function Login() {
     }, []);
 
     const handleLogin = async () => {
-        const res = await fetch("http://localhost:8080/api/auth/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(form),
@@ -41,7 +41,9 @@ export default function Login() {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
-            address: user.address
+            address: user.address,
+            payment: user.payment
+            // payment should be here
         }));
 
         if (redirect === "checkout") {

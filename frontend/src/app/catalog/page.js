@@ -65,9 +65,9 @@ export default function CatalogPage() {
     // Fetch products + variants once
     useEffect(() => {
         async function fetchData() {
-            const pRes = await fetch("http://localhost:8080/api/product", { cache: "no-store" });
-            const vRes = await fetch("http://localhost:8080/api/product_variant", { cache: "no-store" });
-            const images = await fetch("http://localhost:8080/api/product_image", { cache: "no-store" });
+            const pRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`, { cache: "no-store" });
+            const vRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant`, { cache: "no-store" });
+            const images = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`, { cache: "no-store" });
 
             setProducts(await pRes.json());
             setVariants(await vRes.json());
@@ -80,7 +80,7 @@ export default function CatalogPage() {
     const addToCart = async (variantId, quantity = 1) => {
         try {
           const res = await fetch(
-            `http://localhost:8080/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
             { method: "POST", credentials: "include", } //the browser sends the JSESSIONID cookie to backend to save the sessionId.
           ); 
     
@@ -90,10 +90,10 @@ export default function CatalogPage() {
             const variant = variants.find(v => v.variantId === variantId);
             const errorMessage = `Only ${variant?.quantity || 0} items are currently in stock.`;
             throw new Error(errorMessage);
-          }
+          } 
     
           // Fetch the updated cart from backend, this will update the cart item badge count
-          const cartRes = await fetch("http://localhost:8080/api/cart", { credentials: "include" });
+          const cartRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, { credentials: "include" });
           const updatedCart = await cartRes.json();
           setCart(updatedCart);
           fetchCart();

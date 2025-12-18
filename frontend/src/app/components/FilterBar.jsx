@@ -45,7 +45,7 @@ export default function FilterBar({ onChange }) {
 
     // Fetch all product types from backend
     useEffect(() => {
-        fetch("http://localhost:8080/api/product/types")
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/types`)
           .then(res => res.json())
           .then(data => {
             console.log("types from backend:", data);
@@ -55,7 +55,7 @@ export default function FilterBar({ onChange }) {
 
     // Fetch all categories from backend
     useEffect(() => {
-    fetch("http://localhost:8080/api/category")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/category`)
         .then((res) => res.json())
         .then((data) => setCategories(data));
     }, []);
@@ -63,7 +63,7 @@ export default function FilterBar({ onChange }) {
 
     // Fetch all products from backend
     useEffect(() => {
-        fetch("http://localhost:8080/api/product")
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`)
             .then((res) => res.json())
             .then((data) => setProducts(data));
         }, []);

@@ -34,7 +34,7 @@ export default function AddProductModal({ open, onClose, onAdd }) {
 
   // Fetch all product types from backend
   useEffect(() => {
-    fetch("http://localhost:8080/api/product/types")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/types`)
       .then(res => res.json())
       .then(data => {
         console.log("types from backend:", data);

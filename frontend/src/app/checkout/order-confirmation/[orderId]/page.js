@@ -16,11 +16,11 @@ export default function OrderConfirmation({ params }) {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        const resOrder = await fetch(`http://localhost:8080/api/order/${orderId}`);
+        const resOrder = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/${orderId}`);
         const orderList = await resOrder.json();
         setOrder(orderList[0]);
 
-        const resItems = await fetch(`http://localhost:8080/api/order-item/order/${orderId}`);
+        const resItems = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order-item/order/${orderId}`);
         
         const items = await resItems.json();
         console.log("Order Items:", items); //
@@ -36,7 +36,7 @@ export default function OrderConfirmation({ params }) {
   }, [orderId]);
 // Load product images
 useEffect(() => {
-    fetch("http://localhost:8080/api/product_image")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`)
       .then((res) => res.json())
       .then((data) => setProductImages(data))
       .catch((err) => console.error("Error loading images:", err));
