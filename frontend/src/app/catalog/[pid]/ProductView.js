@@ -42,7 +42,7 @@ export default function ProductView({ productId }) {
   const addToCart = async (variantId, quantity = 1) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cart/add?variantId=${variantId}&quantity=${quantity}`,
         { method: "POST", credentials: "include", } //the browser sends the JSESSIONID cookie to backend to save the sessionId.
       ); 
 
@@ -55,7 +55,7 @@ export default function ProductView({ productId }) {
       }
 
       // Fetch the updated cart from backend, this will update the cart item badge count
-      const cartRes = await fetch("http://localhost:8080/api/cart", { credentials: "include" });
+      const cartRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, { credentials: "include" });
       const updatedCart = await cartRes.json();
       setCart(updatedCart);
       fetchCart();
@@ -71,7 +71,7 @@ export default function ProductView({ productId }) {
   // Get the product object
     useEffect(() => {
         if (!productId) return;
-        fetch(`http://localhost:8080/api/product/${productId}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/${productId}`)
         .then((res) => res.json())
           .then((data) => {-
             console.log("Product:", data);
@@ -84,7 +84,7 @@ export default function ProductView({ productId }) {
     useEffect(() => {
         if (!productId) return;
 
-        fetch(`http://localhost:8080/api/product_variant/${productId}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant/${productId}`)
         .then((res) => res.json())
           .then((data) => {
             console.log("Product Variants:", data);
@@ -97,7 +97,7 @@ export default function ProductView({ productId }) {
       useEffect(() => {
         if (!productId) return;
 
-        fetch(`http://localhost:8080/api/product_image/${productId}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image/${productId}`)
           .then(res => res.json())
           .then((data) => {
             const urls = data.map(img => img.imageUrl);
@@ -119,7 +119,7 @@ export default function ProductView({ productId }) {
     useEffect(() => {
         if (!product || !product.categories) return;
 
-        fetch(`http://localhost:8080/api/product/related/${productId}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/related/${productId}`)
         .then((res) => res.json())
           .then((data) => {
             console.log("Related Products:", data);
@@ -135,7 +135,7 @@ export default function ProductView({ productId }) {
         try {
           const imagePromises = relatedProducts.map(async (product) => {
             const res = await fetch(
-              `http://localhost:8080/api/product_image/${product.productId}`
+              `${process.env.NEXT_PUBLIC_API_URL}/api/product_image/${product.productId}`
             );
             const data = await res.json();
 

@@ -7,7 +7,7 @@ export default function Logout() {
     const logout = async () => {
       try {
         // Backend logout, this invalidates the session and starts a new one to ensure user is removed.
-        await fetch("http://localhost:8080/api/auth/logout", {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {
           method: "POST",
           credentials: "include", 
         });

@@ -51,7 +51,7 @@ export default function AdminOrderDetails({ params }) {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        const res = await fetch(`http://localhost:8080/api/admin/orders/${orderId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/orders/${orderId}`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Failed to fetch order");
@@ -93,7 +93,7 @@ export default function AdminOrderDetails({ params }) {
 
     async function fetchProductImages() {
       try {
-        const res = await fetch("http://localhost:8080/api/product_image");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`);
         const data = await res.json();
         setProductImages(data);
       } catch (err) {
@@ -146,7 +146,7 @@ export default function AdminOrderDetails({ params }) {
         items: order.items,
       };
 
-      const res = await fetch(`http://localhost:8080/api/admin/orders/${orderId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/orders/${orderId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

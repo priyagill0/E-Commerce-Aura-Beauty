@@ -40,7 +40,7 @@ export default function AccountManagement() {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const res = await fetch("http://localhost:8080/api/customers", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/customers`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error();
@@ -59,7 +59,7 @@ export default function AccountManagement() {
     setLoadingOrders(true);
     try {
       const res = await fetch(
-        `http://localhost:8080/api/order/user/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/order/user/${userId}`,
         { credentials: "include" }
       );
       setOrders(await res.json());

@@ -21,7 +21,7 @@ const deleteCartItem = async (itemId) => {
 
   try {
     const res = await fetch(
-      `http://localhost:8080/api/cart/item/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cart/item/${itemId}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -52,7 +52,7 @@ const updateQuantity = async (itemId, newQuantity) => {
 
   try {
     const res = await fetch(
-      `http://localhost:8080/api/cart/item/${itemId}?quantity=${newQuantity}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cart/item/${itemId}?quantity=${newQuantity}`,
       {
         method: "PUT",
         credentials: "include",
@@ -71,7 +71,7 @@ const updateQuantity = async (itemId, newQuantity) => {
 
 // loading cart
 useEffect(() => {
-  fetch(`http://localhost:8080/api/cart`, 
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, 
         {credentials: "include"}) // "include": browser sends the JSESSIONID cookie to backend
     .then(async (res) => {
       // If backend returned empty body
@@ -88,7 +88,7 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  fetch("http://localhost:8080/api/product_image")
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_image`)
   .then((res) => res.json())
     .then((data) => {-
       console.log("Product Images:", data);

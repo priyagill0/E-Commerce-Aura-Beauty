@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/cart", { credentials: "include" });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cart`, { credentials: "include" });
       if (!res.ok) return { items: [] };
       const data = await res.json();
       setCart(data);

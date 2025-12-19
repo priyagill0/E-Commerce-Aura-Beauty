@@ -59,13 +59,13 @@ export default function AdminUserEditPage() {
         router.replace("/"); 
     }
     }, [router]); 
-    
+
   /* ---------------- FETCH USER ---------------- */
   useEffect(() => {
     async function fetchUser() {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/customers/${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${userId}`,
           { credentials: "include" }
         );
         if (!res.ok) throw new Error();
@@ -86,7 +86,7 @@ export default function AdminUserEditPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/api/customers/${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/customers/${userId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

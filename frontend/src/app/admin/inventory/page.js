@@ -27,7 +27,10 @@ export default function InventoryPage() {
 
   const handleAddNewProduct = async (productData) => {
     try {
-      const res = await fetch("http://localhost:8080/api/product/addProductWithVariant", {
+      console.log(productData)
+      console.log("before add")
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product/addProductWithVariant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(productData),
@@ -36,7 +39,7 @@ export default function InventoryPage() {
       if (!res.ok) throw new Error("Failed to add product");
    
       // Refetch full table to include new product + variant
-      const updatedRes = await fetch("http://localhost:8080/api/product_variant/sorted");
+      const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant/sorted`);
       const updatedData = await updatedRes.json();
   
       const mappedData = updatedData.map((v) => ({
@@ -61,7 +64,7 @@ export default function InventoryPage() {
 
     const handleAddNewVariant = async (variantData) => {
         try {
-        const res = await fetch("http://localhost:8080/api/product_variant", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(variantData),
@@ -69,7 +72,7 @@ export default function InventoryPage() {
         if (!res.ok) throw new Error("Failed to add variant");
     
         // Refetch the full table
-        const updatedRes = await fetch("http://localhost:8080/api/product_variant/sorted");
+        const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant/sorted`);
         const updatedData = await updatedRes.json();
     
         const mappedData = updatedData.map((v) => ({
@@ -95,7 +98,7 @@ export default function InventoryPage() {
 
   const handleEdit = async (variantId, field, value) => {
     try {
-      const res = await fetch(`http://localhost:8080/api/product_variant/${variantId}/qty`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant/${variantId}/qty`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Number(value)),
@@ -167,7 +170,7 @@ export default function InventoryPage() {
 
   useEffect(() => {
     async function load() {
-      const res = await fetch("http://localhost:8080/api/product_variant/sorted");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product_variant/sorted`);
       const data = await res.json();
 
       const mappedData = data.map((v) => ({

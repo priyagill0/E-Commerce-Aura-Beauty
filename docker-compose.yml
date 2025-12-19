@@ -5,7 +5,7 @@ services:
     image: mysql:8
     container_name: mysql-db
     environment:
-      MYSQL_ROOT_PASSWORD: EECS4413  # only this for root
+      MYSQL_ROOT_PASSWORD: EECS4413
       MYSQL_DATABASE: ecommerce         
     ports:
       - "3306:3306"
@@ -13,8 +13,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   backend:
-    build: ./backend
-    container_name: spring-backend
+    image: priyagill16/ecommerce-backend:latest
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Toronto
       SPRING_DATASOURCE_USERNAME: root
@@ -25,12 +24,15 @@ services:
       - db
 
   frontend:
-    build: ./frontend
-    container_name: next-frontend
+    # build:
+    #   context: ./frontend
+    #   args:
+    #     NEXT_PUBLIC_API_URL: http://localhost:8080
+    image: priyagill16/ecommerce-frontend:latest
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_API_URL: http://localhost:8080  # <-- runtime value the browser will use
     depends_on:
       - backend
 

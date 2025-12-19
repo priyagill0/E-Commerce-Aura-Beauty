@@ -32,7 +32,7 @@ export default function SalesPage() {
   useEffect(() => {
     async function loadSales() {
       try {
-        const res = await fetch("http://localhost:8080/api/order-item/sales-history");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order-item/sales-history`);
         const data = await res.json();
 
         const rowsData = Array.isArray(data) ? data : data.salesHistory || [];

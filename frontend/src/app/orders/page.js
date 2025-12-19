@@ -26,7 +26,7 @@ export default function PastOrders({ productImages }) {
     const fetchOrders = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/api/order/user/${user.id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/order/user/${user.id}`
         );
         const data = await res.json();
 

@@ -20,7 +20,7 @@ export default function SalesPage() {
   useEffect(() => {
     async function loadOrders() {
       try {
-        const res = await fetch("http://localhost:8080/api/order/admin");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/admin`);
         const data = await res.json();
 
         if (Array.isArray(data)) {
@@ -55,7 +55,7 @@ export default function SalesPage() {
     );
 
     try {
-      await fetch(`http://localhost:8080/api/order/admin/${orderId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/order/admin/${orderId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newStatus),
@@ -117,7 +117,7 @@ export default function SalesPage() {
     { id: "shippingAddress", label: "Shipping Address", minWidth: 250 },
   ];
 
-  if (loading) return <div style={{ padding: 30 }}>Loading sales data...</div>;
+  if (loading) return <div style={{ padding: 30 }}>Loading orders data...</div>;
 
   return (
     <div style={{ padding: "50px 30px 30px 30px" }}>
