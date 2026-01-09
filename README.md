@@ -1,4 +1,4 @@
-# E-Commerce Website
+# Aura Beauty - Full-Stack E-Commerce Website 
 
  By: Priya Gill, Maryam Ahmadi Tabatabaei and Natalie Lewis
 
